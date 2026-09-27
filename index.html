@@ -152,13 +152,37 @@ function locationError(error) {
     if (error.code === 1) {
 
         status.textContent =
-            "Location permission was denied.";
+            "Location permission was denied. Please allow location access to continue.";
+
+        const retryButton = document.createElement("button");
+
+        retryButton.textContent = "Try Again";
+        retryButton.style.marginTop = "12px";
+        retryButton.style.padding = "12px 20px";
+        retryButton.style.border = "none";
+        retryButton.style.borderRadius = "8px";
+        retryButton.style.background = "#1687ff";
+        retryButton.style.color = "white";
+
+        retryButton.onclick = requestLocation;
+
+        status.appendChild(document.createElement("br"));
+        status.appendChild(retryButton);
+
+    } else if (error.code === 2) {
+
+        status.textContent =
+            "Your location could not be determined. Please check your location settings.";
+
+    } else if (error.code === 3) {
+
+        status.textContent =
+            "The location request timed out. Please try again.";
 
     } else {
 
         status.textContent =
-            "Unable to get your location.";
-
+            "Unable to access your location. Please try again.";
     }
 }
 
